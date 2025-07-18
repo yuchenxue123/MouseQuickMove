@@ -45,16 +45,10 @@ public class MixinGuiScreen implements MousePositionAccessor {
                     value = "INVOKE",
                     target = "Lnet/minecraft/GuiScreen;mouseClicked(III)V",
                     shift = At.Shift.BEFORE
-            ),
-            cancellable = true
+            )
     )
     private void hookMouseInputEventBeforeScreenMouseClicked(CallbackInfo ci, @Local(ordinal = 0) int mouseX, @Local(ordinal = 1) int mouseY) {
-        MouseInputEvent event = new MouseInputEvent(mouseX, mouseY, this.eventButton, MouseInputEvent.Type.CLICKED);
-        EventManager.INSTANCE.callEvent(event);
-
-        if (event.getCancelled()) {
-            ci.cancel();
-        }
+        EventManager.INSTANCE.callEvent(new MouseInputEvent(mouseX, mouseY, this.eventButton, MouseInputEvent.Type.CLICKED));
     }
 
     @Inject(method = "handleMouseInput",
@@ -62,16 +56,10 @@ public class MixinGuiScreen implements MousePositionAccessor {
                     value = "INVOKE",
                     target = "Lnet/minecraft/GuiScreen;mouseMovedOrUp(III)V",
                     shift = At.Shift.BEFORE
-            ),
-            cancellable = true
+            )
     )
     private void hookMouseInputEventBeforeScreenMouseRelease(CallbackInfo ci, @Local(ordinal = 0) int mouseX, @Local(ordinal = 1) int mouseY) {
-        MouseInputEvent event = new MouseInputEvent(mouseX, mouseY, this.eventButton, MouseInputEvent.Type.RELEASED);
-        EventManager.INSTANCE.callEvent(event);
-
-        if (event.getCancelled()) {
-            ci.cancel();
-        }
+        EventManager.INSTANCE.callEvent(new MouseInputEvent(mouseX, mouseY, this.eventButton, MouseInputEvent.Type.RELEASED));
     }
 
     @Inject(method = "handleMouseInput",
@@ -79,16 +67,10 @@ public class MixinGuiScreen implements MousePositionAccessor {
                     value = "INVOKE",
                     target = "Lnet/minecraft/GuiScreen;mouseClickMove(IIIJ)V",
                     shift = At.Shift.BEFORE
-            ),
-            cancellable = true
+            )
     )
     private void hookMouseInputEventBeforeScreenMouseClickMove(CallbackInfo ci, @Local(ordinal = 0) int mouseX, @Local(ordinal = 1) int mouseY) {
-        MouseInputEvent event = new MouseInputEvent(mouseX, mouseY, this.eventButton, MouseInputEvent.Type.CLICK_MOVE);
-        EventManager.INSTANCE.callEvent(event);
-
-        if (event.getCancelled()) {
-            ci.cancel();
-        }
+        EventManager.INSTANCE.callEvent(new MouseInputEvent(mouseX, mouseY, this.eventButton, MouseInputEvent.Type.CLICK_MOVE));
     }
 
     @Inject(method = "handleKeyboardInput",
@@ -96,16 +78,10 @@ public class MixinGuiScreen implements MousePositionAccessor {
                     value = "INVOKE",
                     target = "Lnet/minecraft/GuiScreen;keyTyped(CI)V",
                     shift = At.Shift.AFTER
-            ),
-            cancellable = true
+            )
     )
     private void hookKeyboardInputEvent(CallbackInfo ci, @Local(ordinal = 0) char keyChar, @Local(ordinal = 0) int keyCode) {
-        KeyboardInputEvent event = new KeyboardInputEvent(keyChar, keyCode);
-        EventManager.INSTANCE.callEvent(event);
-
-        if (event.getCancelled()) {
-            ci.cancel();
-        }
+        EventManager.INSTANCE.callEvent(new KeyboardInputEvent(keyChar, keyCode));
     }
 
     @Override

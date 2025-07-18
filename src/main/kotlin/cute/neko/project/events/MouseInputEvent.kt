@@ -1,6 +1,6 @@
 package cute.neko.project.events
 
-import cute.neko.event.CancellableEvent
+import cute.neko.event.Event
 
 /**
  * @author yuchenxue
@@ -12,7 +12,7 @@ class MouseInputEvent(
     val mouseY: Int,
     val button: Int,
     val type: Type
-) : CancellableEvent() {
+) : Event {
 
     enum class Type {
         CLICKED,

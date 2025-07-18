@@ -1,6 +1,6 @@
 package cute.neko.project.events
 
-import cute.neko.event.CancellableEvent
+import cute.neko.event.Event
 
 /**
  * @author yuchenxue
@@ -10,4 +10,4 @@ import cute.neko.event.CancellableEvent
 class KeyboardInputEvent(
     val char: Char,
     val code: Int
-) : CancellableEvent()
+) : Event
