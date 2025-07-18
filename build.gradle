@@ -1,0 +1,84 @@
+plugins {
+    id 'fml-loom' version '1.4.5'
+    id("org.jetbrains.kotlin.jvm") version("${kotlin_version}")
+}
+
+version = project.mod_version
+description = "description"
+group = project.maven_group
+
+base {
+    archivesName = project.mod_name
+}
+
+repositories {
+    mavenLocal()
+    maven { url 'https://jitpack.io' }
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/neko.accesswidener")
+    mergedMinecraftJar()
+    setFML(new File("libs/loader-v3.4.1.jar"))
+
+    mods {
+        "MouseQuickMove" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+configurations {
+    libs
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.fmlMCPMappings()
+    implementation files(loom.getFML().toPath())
+
+    // Kotlin
+    libs(implementation("org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"))
+
+    // Event System
+    libs(implementation("com.github.yuchenxue123:event-system-kotlin:1.0"))
+}
+
+def properties = [
+        "id": project.mod_name.toLowerCase(),
+        "name": project.mod_name,
+        "version": project.version,
+        "description": project.description
+]
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fml.mod.json") {
+        expand properties
+    }
+
+    // put your out dependencies
+    from {
+        configurations.libs.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    } {
+        exclude("META-INF/")
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 17
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+kotlin {
+    compilerOptions {
+        jvmToolchain(17)
+    }
+}
