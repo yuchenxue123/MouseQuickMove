@@ -111,7 +111,7 @@ class MouseQuickMove : ModInitializer, EventListener {
 
         val screen = mc.currentScreen ?: return@handler
 
-        if (screen !is GuiContainer || screen is GuiContainerCreative) return@handler
+        if (screen !is GuiContainer) return@handler
 
         shifted = event.code == Keyboard.KEY_LSHIFT || event.code == Keyboard.KEY_RSHIFT
     }
