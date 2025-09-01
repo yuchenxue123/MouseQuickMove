@@ -1,6 +1,7 @@
 package cute.neko.project.events
 
 import cute.neko.event.Event
+import cute.neko.project.MouseButton
 
 /**
  * @author yuchenxue
@@ -10,7 +11,7 @@ import cute.neko.event.Event
 class MouseInputEvent(
     val mouseX: Int,
     val mouseY: Int,
-    val button: Int,
+    val button: MouseButton,
     val type: Type
 ) : Event {
 

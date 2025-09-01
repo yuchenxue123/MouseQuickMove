@@ -27,7 +27,7 @@ class MouseQuickMove : ModInitializer, EventListener {
 
     @Suppress("unused")
     private val screenDrawHandler = handler<ScreenDrawEvent> { event ->
-        if (drag) {
+        if (dragging) {
             val screenHandler = when (val screen = mc.currentScreen) {
                 is GuiContainerCreative -> GuiContainerCreativeScreenHandler(screen)
                 is GuiContainer -> GuiContainerScreenHandler(screen)
@@ -42,65 +42,26 @@ class MouseQuickMove : ModInitializer, EventListener {
         }
     }
 
-    private var drag = false
+    private var dragging = false
 
     @Suppress("unused")
     private val mouseInputHandler = handler<MouseInputEvent> { event ->
 
         when (event.type) {
             CLICKED -> {
-                if (event.button == 0) {
-                    drag = true
+                if (event.button == MouseButton.LEFT) {
+                    dragging = true
                 }
             }
 
             RELEASED -> {
-                drag = false
+                dragging = false
             }
 
             CLICK_MOVE -> {
 
             }
         }
-
-
-//        if (event.type != MouseInputEvent.Type.CLICK_MOVE || event.button != 0) return@handler
-//
-//        val screenHandler = when (val screen = mc.currentScreen) {
-//            is GuiContainerCreative -> GuiContainerCreativeScreenHandler(screen)
-//            is GuiContainer -> GuiContainerScreenHandler(screen)
-//            else -> return@handler
-//        }
-//
-//        val slot = screenHandler.getOverSlot()
-//
-//        if (shifted && slot != null) {
-//            screenHandler.quick(slot)
-//        }
-
-
-
-
-
-//        val mc = Minecraft.getMinecraft()
-//
-//        val screen = mc.currentScreen ?: return@handler
-//
-//        if (screen !is GuiContainer || screen is GuiContainerCreative) return@handler
-//
-//        if (shifted) {
-//            val slot = screen.getSlotAtPosition(event.mouseX, event.mouseY)
-//
-//            if (slot != null) {
-//                mc.playerController.windowClick(
-//                    screen.inventorySlots.windowId,
-//                    slot.slotNumber,
-//                    0,
-//                    1,
-//                    mc.thePlayer
-//                )
-//            }
-//        }
     }
 
     private var shifted = false
@@ -115,5 +76,4 @@ class MouseQuickMove : ModInitializer, EventListener {
 
         shifted = event.code == Keyboard.KEY_LSHIFT || event.code == Keyboard.KEY_RSHIFT
     }
-
 }

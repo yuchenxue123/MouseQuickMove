@@ -3,6 +3,7 @@ package cute.neko.mixins;
 import com.llamalad7.mixinextras.sugar.Local;
 import cute.neko.accessor.MousePositionAccessor;
 import cute.neko.event.EventManager;
+import cute.neko.project.MouseButton;
 import cute.neko.project.events.KeyboardInputEvent;
 import cute.neko.project.events.MouseInputEvent;
 import cute.neko.project.events.ScreenDrawEvent;
@@ -13,8 +14,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import javax.swing.event.MouseInputListener;
 
 /**
  * @author yuchenxue
@@ -48,7 +47,7 @@ public class MixinGuiScreen implements MousePositionAccessor {
             )
     )
     private void hookMouseInputEventBeforeScreenMouseClicked(CallbackInfo ci, @Local(ordinal = 0) int mouseX, @Local(ordinal = 1) int mouseY) {
-        EventManager.INSTANCE.callEvent(new MouseInputEvent(mouseX, mouseY, this.eventButton, MouseInputEvent.Type.CLICKED));
+        EventManager.INSTANCE.callEvent(new MouseInputEvent(mouseX, mouseY, MouseButton.Companion.parse(this.eventButton), MouseInputEvent.Type.CLICKED));
     }
 
     @Inject(method = "handleMouseInput",
@@ -59,7 +58,7 @@ public class MixinGuiScreen implements MousePositionAccessor {
             )
     )
     private void hookMouseInputEventBeforeScreenMouseRelease(CallbackInfo ci, @Local(ordinal = 0) int mouseX, @Local(ordinal = 1) int mouseY) {
-        EventManager.INSTANCE.callEvent(new MouseInputEvent(mouseX, mouseY, this.eventButton, MouseInputEvent.Type.RELEASED));
+        EventManager.INSTANCE.callEvent(new MouseInputEvent(mouseX, mouseY, MouseButton.Companion.parse(this.eventButton), MouseInputEvent.Type.RELEASED));
     }
 
     @Inject(method = "handleMouseInput",
@@ -70,7 +69,7 @@ public class MixinGuiScreen implements MousePositionAccessor {
             )
     )
     private void hookMouseInputEventBeforeScreenMouseClickMove(CallbackInfo ci, @Local(ordinal = 0) int mouseX, @Local(ordinal = 1) int mouseY) {
-        EventManager.INSTANCE.callEvent(new MouseInputEvent(mouseX, mouseY, this.eventButton, MouseInputEvent.Type.CLICK_MOVE));
+        EventManager.INSTANCE.callEvent(new MouseInputEvent(mouseX, mouseY, MouseButton.Companion.parse(this.eventButton), MouseInputEvent.Type.CLICK_MOVE));
     }
 
     @Inject(method = "handleKeyboardInput",
