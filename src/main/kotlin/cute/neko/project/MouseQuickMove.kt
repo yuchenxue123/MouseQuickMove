@@ -18,7 +18,7 @@ import org.lwjgl.input.Keyboard
  * @date 2025/07/16
  */
 
-class MouseQuickMove : ModInitializer, EventListener {
+object MouseQuickMove : ModInitializer, EventListener {
 
     val LOGGER = LogManager.getLogger(MouseQuickMove::class.java)
 

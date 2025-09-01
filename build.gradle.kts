@@ -55,7 +55,7 @@ dependencies {
     mappings(loom.fmlMCPMappings())
     implementation(files(loom.fml.toPath()))
 
-    packageImplementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
 
     packageImplementation("com.github.yuchenxue123:event-system-kotlin:1.0") {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")

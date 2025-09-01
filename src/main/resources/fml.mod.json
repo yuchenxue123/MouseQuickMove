@@ -12,7 +12,12 @@
 	},
 	"environment": "*",
 	"entrypoints": {
-		"main": ["cute.neko.project.MouseQuickMove"]
+		"main": [
+          {
+            "adapter": "kotlin",
+            "value": "cute.neko.project.MouseQuickMove"
+          }
+        ]
 	},
 	"mixins": [
 		"neko.mixins.json"
